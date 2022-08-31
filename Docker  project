@@ -1,0 +1,29 @@
+#create a repository to store the docker image in docker hub
+
+# launch an ec2 instance. open port  80 and port 22
+
+#install and configuration docker on the ec2 instance
+sudo yum update -y
+sudo amazon-linux-extras install docker -y
+sudo service docker start
+sudo systemctl enable docker
+sudo usermod -a -G docker ec2-user
+docker
+
+# create a dockerfile
+sudo vi dockerfile
+
+# build the docker image
+sudo build -t techmax .
+
+# login to your docker hub account
+docker login --username franckfongang
+
+# use the docker tag command to give the jupiter image a new name
+docker tag techmax franckfongang/techmax
+
+#push the image to your docker hub repository
+docker push franckfongang/techmax
+
+# start the container to test the image
+docker run -dp 80:80 franckfongang/techmax
